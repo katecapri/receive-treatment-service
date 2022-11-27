@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/css.css') }}" type="text/css"/>
+    <title>Отправить обращение</title>
+</head>
+<body>
+    <div class="for-form">
+        <h1>Обращение</h1>
+        <form method="POST" action="http://localhost:8888">
+        <p><label>Фамилия: </label><input type="text" name="last_name" required></p>
+        <p><label>Имя: </label><input type="text" name="first_name" required></p>
+        <p><label>Отчество: </label><input type="text" name="patronymic" required></p>
+        <p>
+            <label>Телефон:</label>
+            <input type="tel" id="phone" name="phone" pattern="\+7\+\(\+[0-9]{3}+\)\+[0-9]{3}\-\+[0-9]{4}" required>
+            <script src="{{ url_for('static', filename= 'js/jquery-1.12.4.min.js') }}"></script>
+            <script src="{{ url_for('static', filename= 'js/jquery.maskedinput.min.js') }}"></script>
+            <script>
+            $(function($){
+                $("#phone").mask("+7 (999) 999-9999",
+                {completed:function()
+                    {alert("Номер телефона: "+this.val());}
+                });
+            });
+            </script>
+        <label style="margin-left: 30%; margin-top: -10%;">Формат: +7(012)345-6789</label></p>
+        <div style="height:100px"><label>Обращение: </label><textarea name="treatment"></textarea></div>
+        <button type="submit">Отправить обращение</button>
+        </form>
+    </div>
+</body>
+</html>
