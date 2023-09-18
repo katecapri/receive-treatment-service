@@ -1,0 +1,68 @@
+version: "3.7"
+
+services:
+
+  db:
+    image: treatment_db_image
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres_user
+      - POSTGRES_PASSWORD=postgres_password
+      - POSTGRES_DB=treatments
+
+  frontend:
+    image: treatment_frontend_image
+    ports:
+      - "5000:5000"
+    environment:
+      - BACKEND_URL=http://backend:8888
+    depends_on:
+      - backend
+
+  message-broker:
+    image: rabbitmq:3.12.4-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=rabbitmq_user
+      - RABBITMQ_DEFAULT_PASS=rabbitmq_password
+
+  consumer:
+    image: treatment_consumer_image
+    restart: always
+    ports:
+      - "80:80"
+    environment:
+      - RABBITMQ_USER=rabbitmq_user
+      - RABBITMQ_PASSWORD=rabbitmq_password
+      - RABBITMQ_HOST=message-broker
+      - RABBITMQ_PORT=5672
+      - BACKEND_URL=http://backend:8888
+    depends_on:
+      - message-broker
+
+  backend:
+    image: treatment_backend_image
+    ports:
+      - "8888:8888"
+    environment:
+      - RABBITMQ_USER=rabbitmq_user
+      - RABBITMQ_PASSWORD=rabbitmq_password
+      - RABBITMQ_HOST=message-broker
+      - RABBITMQ_PORT=5672
+      - POSTGRES_USER=postgres_user
+      - POSTGRES_PASSWORD=postgres_password
+      - POSTGRES_DB=treatments
+      - POSTGRES_PORT=5432
+      - POSTGRES_HOST=db
+    depends_on:
+      - db
+    volumes:
+      - "/src/docker/treatment-service/:/media"
+
+networks:
+  default:
+    name: treatment_network
+    external: true
