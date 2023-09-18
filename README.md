@@ -37,11 +37,17 @@
 Либо:
 
 > 	docker network create treatment_network
+> 
 > 	mkdir -p /src/docker/treatment-service/
+> 
 > 	docker build -t treatment_db_image -f db.Dockerfile .
+> 
 > 	docker build -t treatment_frontend_image -f frontend.Dockerfile .
+> 
 > 	docker build -t treatment_consumer_image -f consumer.Dockerfile .
+> 
 > 	docker build -t treatment_backend_image -f backend.Dockerfile .
+> 
 > 	docker-compose -f docker-compose.yaml up -d
 
 2. Просмотр запущенных контейнеров:
