@@ -1,6 +1,6 @@
 ﻿#  Сервис по приему обращений #
 
-![](https://github.com/katecapri/images-for-readme/blob/main/Python.png) ![](https://github.com/katecapri/images-for-readme/blob/main/docker.png)
+![](https://github.com/katecapri/images-for-readme/blob/main/tornado.jpeg) ![](https://github.com/katecapri/images-for-readme/blob/main/docker.png)
   ![](https://github.com/katecapri/images-for-readme/blob/main/RabbitMQ.png)
 
 
